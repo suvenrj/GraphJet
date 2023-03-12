@@ -267,15 +267,21 @@ public class SalsaTest {
             .build();
 
     sourceIdList.clear();
-    for (int i = 1; i <= maxNumLeftNodes; i++) {
+    for (int i = 1; i <= 2*maxNumLeftNodes; i++) {   //number of iterations increased to account for repitition in random number generation
       sourceIdList.add((long) random.nextInt(maxUserId));
+      if (sourceIdList.size()==maxNumLeftNodes){    //ensures that size of sourceIdList is as intended
+        break;
+      }
     }
     sourceIdList.add(userId);
 
     for (long sourceId : sourceIdList) {
       destinationIds.clear();
-      for (int i = 1; i <= leftDegree; i++) {
+      for (int i = 1; i <= 2*leftDegree; i++) {   //number of iterations increased to account for repitition in random number generation
         destinationIds.add((long) random.nextInt(maxUserId));
+        if (destinationIds.size()==leftDegree){  //ensures that size of destinationIdList is as intended
+          break;
+        }
       }
       for (long destinationId : destinationIds) {
         smallLeftRegularBipartiteGraph.addEdge(sourceId, destinationId, (byte) 0);
@@ -289,7 +295,6 @@ public class SalsaTest {
     SalsaResponse salsaResponse = salsa.computeRecommendations(salsaRequest, random);
     List<RecommendationInfo> salsaResults =
         Lists.newArrayList(salsaResponse.getRankedRecommendations());
-
     assertEquals(expectedSalsaStats, salsaResponse.getSalsaStats());
     assertEquals(expectedTopResults, salsaResults);
   }
