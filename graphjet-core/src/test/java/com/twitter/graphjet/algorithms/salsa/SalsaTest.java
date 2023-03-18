@@ -295,6 +295,7 @@ public class SalsaTest {
     SalsaResponse salsaResponse = salsa.computeRecommendations(salsaRequest, random);
     List<RecommendationInfo> salsaResults =
         Lists.newArrayList(salsaResponse.getRankedRecommendations());
+        
     assertEquals(expectedSalsaStats, salsaResponse.getSalsaStats());
     assertEquals(expectedTopResults, salsaResults);
   }
